@@ -4,7 +4,13 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 import { DEFAULT_TENANT_ID } from "@/lib/tenants"
-import { DEFAULT_REPORT_RANGE, type ReportRange } from "@/lib/report-range"
+import * as React from "react"
+
+import {
+  DEFAULT_REPORT_RANGE,
+  resolveRange,
+  type ReportRange,
+} from "@/lib/report-range"
 
 export const UI_SCALE_MIN = 0.9
 export const UI_SCALE_MAX = 1.4
@@ -94,3 +100,12 @@ export const useUi = create<UiState>()(
     }
   )
 )
+
+/**
+ * The reporting window with presets resolved against the current day. Always
+ * use this rather than reading `reportRange` straight off the store.
+ */
+export function useReportRange(): ReportRange {
+  const stored = useUi((state) => state.reportRange)
+  return React.useMemo(() => resolveRange(stored), [stored])
+}

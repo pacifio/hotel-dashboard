@@ -54,7 +54,21 @@ export function resolvePreset(preset: PresetId): ReportRange {
   }
 }
 
-export const DEFAULT_REPORT_RANGE = resolvePreset("30d")
+export const DEFAULT_PRESET: PresetId = "30d"
+
+/**
+ * Only ever the store's initial shape. Never read the `from`/`to` off a preset
+ * range directly — go through `resolveRange`, which recomputes against the
+ * current day. Freezing preset dates at module load means a long-running server
+ * keeps serving the window it computed at boot, which drifts the moment the UTC
+ * day rolls over and surfaces as a hydration mismatch against a fresh client.
+ */
+export const DEFAULT_REPORT_RANGE = resolvePreset(DEFAULT_PRESET)
+
+/** Presets resolve against today; only custom ranges carry fixed dates. */
+export function resolveRange(range: ReportRange): ReportRange {
+  return range.preset === "custom" ? range : resolvePreset(range.preset)
+}
 
 /** Inclusive day count — a single-day range is 1 day, not 0. */
 export function rangeDays(range: ReportRange) {

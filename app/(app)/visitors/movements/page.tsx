@@ -23,7 +23,7 @@ import { useDataset, useLookups } from "@/lib/data"
 import { useLocale } from "@/lib/i18n/provider"
 import { useMounted } from "@/hooks/use-mounted"
 import { CHART_COLORS } from "@/lib/hue"
-import { demoToday } from "@/lib/demo-time"
+import { demoNow } from "@/lib/demo-time"
 import { CLEARANCE_HUE, CLEARANCE_LABEL, dwellMinutes } from "@/lib/vms"
 import type { GateId } from "@/lib/types"
 
@@ -49,7 +49,7 @@ export default function MovementsPage() {
   const [gate, setGate] = React.useState<GateId | "all">("all")
   const [query, setQuery] = React.useState("")
 
-  const now = React.useMemo(() => demoToday().getTime() + 10 * 3600_000, [])
+  const now = demoNow()
 
   const movements = React.useMemo(() => {
     const normalized = query.trim().toLowerCase()

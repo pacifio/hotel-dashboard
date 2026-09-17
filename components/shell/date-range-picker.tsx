@@ -25,7 +25,7 @@ import {
   resolvePreset,
   type PresetId,
 } from "@/lib/report-range"
-import { useUi } from "@/lib/store"
+import { useReportRange, useUi } from "@/lib/store"
 
 /**
  * The reporting window for the whole app. Presets on the left, two months of
@@ -46,7 +46,7 @@ function openingMonth(from: string) {
 
 export function DateRangePicker() {
   const { t, num, date: fmtDate } = useLocale()
-  const committed = useUi((state) => state.reportRange)
+  const committed = useReportRange()
   const setReportRange = useUi((state) => state.setReportRange)
 
   const [open, setOpen] = React.useState(false)

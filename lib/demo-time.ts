@@ -11,6 +11,16 @@ export function demoToday() {
   )
 }
 
+/**
+ * The demo's "now": the anchor day at 10:00 UTC. Everything generated is keyed
+ * to `demoToday()`, so relative times must be measured from the same clock —
+ * using the wall clock instead makes the server and the client disagree and
+ * drifts the copy away from the data it describes.
+ */
+export function demoNow() {
+  return demoToday().getTime() + 10 * 3_600_000
+}
+
 export function addDays(date: Date, days: number) {
   return new Date(date.getTime() + days * DAY_MS)
 }

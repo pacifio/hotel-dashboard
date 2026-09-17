@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils"
 import { useDataset, useLookups } from "@/lib/data"
 import { useLocale } from "@/lib/i18n/provider"
 import { CHART_COLORS, HUE_VAR } from "@/lib/hue"
-import { demoToday } from "@/lib/demo-time"
+import { demoNow } from "@/lib/demo-time"
 import {
   CLEARANCE_HUE,
   CLEARANCE_LABEL,
@@ -46,7 +46,7 @@ export default function ClearancePage() {
   )
   const [selectedId, setSelectedId] = React.useState<string>()
 
-  const now = React.useMemo(() => demoToday().getTime() + 10 * 3600_000, [])
+  const now = demoNow()
 
   const visitors = React.useMemo(() => {
     const list =

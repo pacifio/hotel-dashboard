@@ -33,7 +33,7 @@ import { CHART_COLORS, HUE_VAR } from "@/lib/hue"
 import { demoToday, isoDay } from "@/lib/demo-time"
 import { computeKpis } from "@/lib/metrics"
 import { rangeSeriesSlice, resolvePreset } from "@/lib/report-range"
-import { useUi } from "@/lib/store"
+import { useReportRange, useUi } from "@/lib/store"
 import { cn } from "@/lib/utils"
 
 const RANGES = ["7d", "30d", "90d"] as const
@@ -52,7 +52,7 @@ export default function DashboardPage() {
   const lookups = useLookups()
   const money = useMoney()
   const { t, locale, num, date, pct, relative } = useLocale()
-  const reportRange = useUi((state) => state.reportRange)
+  const reportRange = useReportRange()
   const setReportRange = useUi((state) => state.setReportRange)
 
   const today = React.useMemo(() => isoDay(demoToday()), [])

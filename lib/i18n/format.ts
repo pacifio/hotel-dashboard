@@ -1,3 +1,4 @@
+import { demoNow } from "@/lib/demo-time"
 import type { Locale } from "./config"
 
 const INTL: Record<Locale, string> = {
@@ -136,7 +137,10 @@ const BN_UNITS: Record<string, string> = {
   second: "সেকেন্ড",
 }
 
-function formatRelativeBangla(value: number, unit: Intl.RelativeTimeFormatUnit) {
+function formatRelativeBangla(
+  value: number,
+  unit: Intl.RelativeTimeFormatUnit
+) {
   const amount = Math.abs(value)
   const past = value < 0
 
@@ -148,7 +152,9 @@ function formatRelativeBangla(value: number, unit: Intl.RelativeTimeFormatUnit) 
 }
 
 export function formatRelative(date: Date | string | number, locale: Locale) {
-  const seconds = (new Date(date).getTime() - Date.now()) / 1000
+  // Measured from the demo clock, not the wall clock: keeps server and client
+  // output identical and consistent with the generated timestamps.
+  const seconds = (new Date(date).getTime() - demoNow()) / 1000
 
   for (const [unit, secondsInUnit] of RELATIVE_UNITS) {
     if (Math.abs(seconds) >= secondsInUnit || unit === "second") {
